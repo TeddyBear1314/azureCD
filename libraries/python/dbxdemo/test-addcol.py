@@ -1,8 +1,8 @@
 # test-addcol.py
 import pytest
 
-from dbxdemo.spark import get_spark
-from dbxdemo.appendcol import with_status
+from pyspark.sql import SparkSession
+from addcol import with_status
 
 class TestAppendCol(object):
 
@@ -11,7 +11,8 @@ class TestAppendCol(object):
             ("pete", "pan", "peter.pan@databricks.com"),
             ("jason", "argonaut", "jason.argonaut@databricks.com")
         ]
-        source_df = get_spark().createDataFrame(
+        spark = SparkSession.builder.appName('abc').getOrCreate()
+        source_df = spark.createDataFrame(
             source_data,
             ["first_name", "last_name", "email"]
         )
